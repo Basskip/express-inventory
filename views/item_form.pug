@@ -1,0 +1,30 @@
+extends layout
+
+block content
+
+  h1 New Item
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Item name
+      input#name.form-control(type='text', name='name' value=(undefined===item ? '' : item.name))
+    div
+      label(for='cost') Cost
+      input#cost.form-control(type='number', name='cost' value=(undefined===item ? 0 : item.cost) min=0)
+    div
+      label(for='description') Description
+      input#description(type='text', name='description' value=(undefined==item ? '' : item.description))
+    div
+      label(for='category') Category
+      select#category(type='select', placeholder='Select category' name='category' required='true')
+        for category in categories
+          if item
+            option(value=category._id selected=(category._id.toString()==item.category._id.toString() ? 'selected' : false)) #{category.name}
+          else
+            option(value=category._id) #{category.name}
+      button(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg  
